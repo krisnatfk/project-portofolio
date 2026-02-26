@@ -64,7 +64,7 @@ const ActivityCard = ({
                                 alt={title}
                                 width={500}
                                 height={300}
-                                className="min-h-[180px] w-full rounded-t-xl object-cover transition-transform duration-500 group-hover:scale-105 md:h-[200px]"
+                                className="h-[180px] w-full rounded-t-xl object-cover transition-transform duration-500 group-hover:scale-105 md:h-[200px]"
                             />
                         </motion.div>
 
