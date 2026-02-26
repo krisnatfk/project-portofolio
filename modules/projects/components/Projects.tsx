@@ -37,8 +37,8 @@ const Projects = () => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {[...Array(4)].map((_, i) => (
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {[...Array(6)].map((_, i) => (
           <ProjectSkeleton key={i} />
         ))}
       </div>
@@ -46,13 +46,13 @@ const Projects = () => {
   }
 
   return (
-    <section className="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
       {filteredProjects?.map((project, index) => (
         <motion.div
           key={index}
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: index * 0.1 }}
+          transition={{ duration: 0.3, delay: index * 0.05 }}
         >
           <ProjectCard {...project} />
         </motion.div>

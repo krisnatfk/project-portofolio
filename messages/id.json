@@ -40,15 +40,15 @@
     "error": "Terjadi kesalahan pada server.",
     "no_data": "Data tidak tersedia."
   },
-  "ContentsPage": {
-    "title": "Konten",
-    "description": "Kumpulan konten coding dan karya kreatif saya.",
-    "open_tiktok": "Buka TikTok",
-    "view": "Lihat",
-    "load_more": "Muat Lebih Banyak",
-    "privacy_policy": "Kebijakan Privasi",
+  "ActivitiesPage": {
+    "title": "Kegiatan",
+    "description": "Kumpulan kegiatan, acara, dan momen berkesan yang telah saya ikuti.",
+    "view_detail": "Lihat detail",
+    "location": "Lokasi",
+    "date": "Tanggal",
+    "category": "Kategori",
     "error": "Terjadi kesalahan pada server.",
-    "no_data": "Konten tidak tersedia."
+    "no_data": "Belum ada kegiatan."
   },
   "AchievementsPage": {
     "title": "Pencapaian",
@@ -217,7 +217,7 @@
   "Navigation": {
     "Home": "Beranda",
     "About": "Tentang",
-    "Contents": "Konten",
+    "Activities": "Kegiatan",
     "Achievements": "Pencapaian",
     "Projects": "Proyek",
     "Dashboard": "Dasbor",

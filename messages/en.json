@@ -40,15 +40,15 @@
     "error": "An error occurred on the server.",
     "no_data": "No data available."
   },
-  "ContentsPage": {
-    "title": "Contents",
-    "description": "A collection of my coding content and creative works.",
-    "open_tiktok": "Open TikTok",
-    "view": "View",
-    "load_more": "Load More",
-    "privacy_policy": "Privacy Policy",
+  "ActivitiesPage": {
+    "title": "Activities",
+    "description": "A collection of my activities, events, and memorable moments.",
+    "view_detail": "View detail",
+    "location": "Location",
+    "date": "Date",
+    "category": "Category",
     "error": "An error occurred on the server.",
-    "no_data": "No data available."
+    "no_data": "No activities found."
   },
   "AchievementsPage": {
     "title": "Achievements",
@@ -217,7 +217,7 @@
   "Navigation": {
     "Home": "Home",
     "About": "About",
-    "Contents": "Contents",
+    "Activities": "Activities",
     "Achievements": "Achievements",
     "Projects": "Projects",
     "Dashboard": "Dashboard",

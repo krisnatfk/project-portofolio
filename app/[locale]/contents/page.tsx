@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import Container from "@/common/components/elements/Container";
 import PageHeading from "@/common/components/elements/PageHeading";
-import Tiktok from "@/modules/contents/Tiktok";
+import Activities from "@/modules/activities";
 import { METADATA } from "@/common/constants/metadata";
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 export async function generateMetadata({
   params: { locale },
 }: Props): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: "ContentsPage" });
+  const t = await getTranslations({ locale, namespace: "ActivitiesPage" });
 
   return {
     title: `${t("title")} ${METADATA.exTitle}`,
@@ -25,12 +25,12 @@ export async function generateMetadata({
 }
 
 const ContentsPage = async ({ params: { locale } }: Props) => {
-  const t = await getTranslations({ locale, namespace: "ContentsPage" });
+  const t = await getTranslations({ locale, namespace: "ActivitiesPage" });
 
   return (
     <Container data-aos="fade-up">
       <PageHeading title={t("title")} description={t("description")} />
-      <Tiktok />
+      <Activities />
     </Container>
   );
 };

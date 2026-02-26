@@ -68,7 +68,7 @@ const GITHUB_PINNED_REPOS_QUERY = `query($username: String!) {
 const GITHUB_RECENT_REPOS_QUERY = `query($username: String!) {
   user(login: $username) {
     repositories(
-      first: 10
+      first: 100
       orderBy: { field: UPDATED_AT, direction: DESC }
       isFork: false
       privacy: PUBLIC
@@ -138,6 +138,32 @@ export const getGithubPinnedRepos = async (): Promise<GithubRepo[]> => {
   if (!username || !token) return [];
 
   return getCachedPinnedRepos(username, token);
+};
+
+const fetchAllPublicRepos = async (username: string, token: string): Promise<GithubRepo[]> => {
+  try {
+    const response = await axios.post(
+      GITHUB_USER_ENDPOINT,
+      { query: GITHUB_RECENT_REPOS_QUERY, variables: { username } },
+      { headers: { Authorization: `bearer ${token}` } },
+    );
+    return response.data?.data?.user?.repositories?.nodes ?? [];
+  } catch (error) {
+    console.error("GitHub All Repos API Error:", error);
+    return [];
+  }
+};
+
+const getCachedAllPublicRepos = unstable_cache(
+  async (username: string, token: string) => fetchAllPublicRepos(username, token),
+  ["github-all-repos-v1"],
+  { revalidate: 3600, tags: ["github-all-repos-tag"] },
+);
+
+export const getAllPublicRepos = async (): Promise<GithubRepo[]> => {
+  const { username, token } = GITHUB_ACCOUNTS;
+  if (!username || !token) return [];
+  return getCachedAllPublicRepos(username, token);
 };
 
 const fetchGithubData = async (username: string, token: string) => {

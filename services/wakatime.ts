@@ -1,6 +1,5 @@
 import { WAKATIME_ACCOUNT } from "@/common/constants/wakatime";
 import axios from "axios";
-import { unstable_cache } from "next/cache";
 
 const { base_url, all_time_endpoint, stats_endpoint } = WAKATIME_ACCOUNT;
 
@@ -62,14 +61,6 @@ const fetchAllTimeSinceToday = async () => {
   }
 };
 
-export const getReadStats = unstable_cache(
-  async () => fetchReadStats(),
-  ["wakatime-read-stats-key"],
-  { revalidate: 3600, tags: ["wakatime-stats-tag"] },
-);
+export const getReadStats = fetchReadStats;
 
-export const getAllTimeSinceToday = unstable_cache(
-  async () => fetchAllTimeSinceToday(),
-  ["wakatime-all-time-key"],
-  { revalidate: 3600, tags: ["wakatime-all-time-tag"] },
-);
+export const getAllTimeSinceToday = fetchAllTimeSinceToday;

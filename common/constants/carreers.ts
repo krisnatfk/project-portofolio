@@ -4,7 +4,7 @@ export const CAREERS: CareerProps[] = [
   {
     position: "Vice Head of Teaching Assistants",
     company: "Universitas Teknokrat Indonesia",
-    logo: "/images/careers/teknokrat.png",
+    logo: "/images/careers/asdos_teknokrat.png",
     location: "Lampung, Indonesia 🇮🇩",
     location_type: "Onsite",
     type: "Part-time",
@@ -30,7 +30,7 @@ export const CAREERS: CareerProps[] = [
   {
     position: "Lead Developer",
     company: "Proyek Digitalisasi UMKM",
-    logo: "/images/placeholder.webp",
+    logo: "/images/careers/umkm.webp",
     location: "Lampung, Indonesia 🇮🇩",
     location_type: "Onsite",
     type: "Freelance",
@@ -56,7 +56,7 @@ export const CAREERS: CareerProps[] = [
   {
     position: "Project Manager",
     company: "SD Negeri 1 Pematang Baru – Website Development",
-    logo: "/images/placeholder.webp",
+    logo: "/images/careers/logo-sd.png",
     location: "Bandar Lampung, Indonesia 🇮🇩",
     location_type: "Onsite",
     type: "Freelance",

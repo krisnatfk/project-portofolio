@@ -5,7 +5,7 @@ import {
   BiCategory as DashboardIcon,
   BiBook as ContactIcon,
 } from "react-icons/bi";
-import { IoPhonePortraitOutline as ContentIcon } from "react-icons/io5";
+import { BsCalendar3 as ContentIcon } from "react-icons/bs";
 import { PiChatTeardropDotsBold as ChatRoomIcon } from "react-icons/pi";
 import { PiCertificate as AchievementIcon } from "react-icons/pi";
 import { VscHubot as SmartChatIcon } from "react-icons/vsc";
@@ -32,12 +32,12 @@ export const MENU_ITEMS: MenuItemProps[] = [
     eventName: "Pages: About",
   },
   {
-    title: "Contents",
+    title: "Activities",
     href: "/contents",
     icon: <ContentIcon size={iconSize} />,
     isShow: true,
     isExternal: false,
-    eventName: "Pages: Contents",
+    eventName: "Pages: Activities",
   },
   {
     title: "Achievements",
