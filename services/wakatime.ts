@@ -2,15 +2,20 @@ import { WAKATIME_ACCOUNT } from "@/common/constants/wakatime";
 import axios from "axios";
 import { unstable_cache } from "next/cache";
 
-const { api_key, base_url, all_time_endpoint, stats_endpoint } =
-  WAKATIME_ACCOUNT;
+const { base_url, all_time_endpoint, stats_endpoint } = WAKATIME_ACCOUNT;
+
+const getAuthHeader = () => {
+  const key = process.env.WAKATIME_API_KEY ?? "";
+  const encoded = Buffer.from(`${key}:`).toString("base64");
+  return `Basic ${encoded}`;
+};
 
 const fetchReadStats = async () => {
   try {
     const response = await axios.get(
       `${base_url}${stats_endpoint}/last_7_days`,
       {
-        headers: { Authorization: `Basic ${api_key}` },
+        headers: { Authorization: getAuthHeader() },
       },
     );
 
@@ -41,7 +46,7 @@ const fetchReadStats = async () => {
 const fetchAllTimeSinceToday = async () => {
   try {
     const response = await axios.get(`${base_url}${all_time_endpoint}`, {
-      headers: { Authorization: `Basic ${api_key}` },
+      headers: { Authorization: getAuthHeader() },
     });
 
     const getData = response.data;

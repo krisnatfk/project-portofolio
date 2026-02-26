@@ -1,5 +1,5 @@
 export const UMAMI_ACCOUNT = {
-  username: "Satria Bahari",
+  username: "Krisna Taufik",
   api_key: process.env.UMAMI_API_KEY,
   base_url: "https://api.umami.is/v1/websites",
   endpoint: {
@@ -12,19 +12,12 @@ export const UMAMI_ACCOUNT = {
     unit: "month",
     timezone: "Asia/Jakarta",
   },
-  is_active: true,
+  is_active: false,
   websites: [
     {
-      domain: "satriabahari.my.id",
+      domain: "krisnataufik.my.id",
       website_id: process.env.UMAMI_WEBSITE_ID_MYID,
-      umami_url:
-        "https://cloud.umami.is/share/YBbXz2wWG0lCgSLt/www.satriabahari.my.id",
-    },
-    {
-      domain: "satriabahari.site",
-      website_id: process.env.UMAMI_WEBSITE_ID_SITE,
-      umami_url:
-        "https://us.umami.is/share/wg6XA2bPFWg8Qc7r/www.satriabahari.site",
+      umami_url: "",
     },
   ],
 };

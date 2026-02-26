@@ -19,12 +19,11 @@ import { UMAMI_ACCOUNT } from "@/common/constants/umami";
 const Umami = () => {
   const searchParams = useSearchParams();
   const domain = searchParams.get("domain") || "all";
-
-  const key = `/api/umami?domain=${domain}`;
-
-  const { data, isLoading, error } = useSWR(key, fetcher);
   const { is_active } = UMAMI_ACCOUNT;
   const t = useTranslations("DashboardPage");
+
+  const key = is_active ? `/api/umami?domain=${domain}` : null;
+  const { data, isLoading, error } = useSWR(key, fetcher);
 
   if (!is_active) return null;
 

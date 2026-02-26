@@ -1,16 +1,16 @@
 export const METADATA = {
-  creator: "Satria Bahari",
+  creator: "Krisna Taufik",
   description: "Personal website, portfolio, blog",
-  keyword: "satria, satria bahari",
+  keyword: "krisna, krisna taufik, informatika, teknokrat",
   authors: {
-    name: "Satria Bahari",
+    name: "Krisna Taufik",
     url: process.env.DOMAIN,
   },
   openGraph: {
     url: process.env.DOMAIN,
-    siteName: "Satria Bahari",
+    siteName: "Krisna Taufik",
     locale: "id-ID",
   },
-  exTitle: "| Satria Bahari",
-  profile: "/images/satria.jpg",
+  exTitle: "| Krisna Taufik",
+  profile: "/images/krisna.png",
 };

@@ -7,7 +7,8 @@ import ProjectDetail from "@/modules/projects/components/ProjectDetail";
 import { ProjectItem } from "@/common/types/projects";
 import { METADATA } from "@/common/constants/metadata";
 import { loadMdxFiles } from "@/common/libs/mdx";
-import { getProjectsDataBySlug } from "@/services/projects";
+import { getGithubPinnedRepos } from "@/services/github";
+import { repoToProjectItem } from "@/common/utils/repoToProjectItem";
 
 interface ProjectDetailPageProps {
   params: {
@@ -17,12 +18,18 @@ interface ProjectDetailPageProps {
 }
 
 const getProjectDetail = async (slug: string): Promise<ProjectItem> => {
-  const projects = await getProjectsDataBySlug(slug);
+  const repos = await getGithubPinnedRepos();
+  const projectItems = repos.map(repoToProjectItem);
+  const project = projectItems.find((p) => p.slug === slug);
+
+  if (!project) throw new Error(`Project "${slug}" not found`);
+
   const contents = loadMdxFiles();
   const content = contents.find((item) => item.slug === slug);
-  const response = { ...projects, content: content?.content };
-  return JSON.parse(JSON.stringify(response));
+
+  return JSON.parse(JSON.stringify({ ...project, content: content?.content ?? null }));
 };
+
 
 export const generateMetadata = async ({
   params,

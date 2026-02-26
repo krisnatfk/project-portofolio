@@ -1,4 +1,5 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 
 export const createClient = () => {
@@ -33,3 +34,14 @@ export const createClient = () => {
     },
   );
 };
+
+/**
+ * Admin client using service_role key — bypasses RLS.
+ * Use ONLY in server-side API routes, never expose to the client.
+ */
+export const createAdminClient = () =>
+  createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } },
+  );

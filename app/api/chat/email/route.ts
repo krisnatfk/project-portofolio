@@ -42,16 +42,16 @@ export const POST = async (request: Request) => {
               "${message}"
             </div>
             <p style="font-size: 14px; color: #64748b; margin-top: 24px;">Klik tombol di bawah ini untuk melihat percakapan lengkap.</p>
-            <a href="https://satriabahari.my.id/chat" style="${buttonStyle}">Buka Chat Room</a>
+            <a href="https://krisnataufik.my.id/chat" style="${buttonStyle}">Buka Chat Room</a>
           </div>
           <div style="${footerStyle}">
-            Sent by Satria Bahari Portfolio System • www.satriabahari.my.id • Jambi, Indonesia
+            Sent by Krisna Taufik Portfolio System • krisnataufik.my.id • Lampung, Indonesia
           </div>
         </div>
       `;
 
       await transporter.sendMail({
-        from: `"Satria Bahari" <${process.env.NODEMAILER_EMAIL}>`,
+        from: `"Krisna Taufik" <${process.env.NODEMAILER_EMAIL}>`,
         to: targetEmail,
         subject: `Re: Pesan kamu dibalas oleh ${senderName}`,
         html: htmlReply,
@@ -65,7 +65,7 @@ export const POST = async (request: Request) => {
             <h1 style="color: ${darkColor}; margin: 0; font-size: 20px; font-weight: bold;">💬 Chat Room Alert</h1>
           </div>
           <div style="${bodyStyle}">
-            <p style="font-size: 16px; margin-top: 0;">Hi Satria,</p>
+            <p style="font-size: 16px; margin-top: 0;">Hi Krisna,</p>
             <p style="font-size: 15px;">Kamu mendapatkan pesan baru dari seseorang di Chat Room kamu.</p>
             
             <div style="background-color: #f8fafc; border-radius: 8px; padding: 16px; margin: 20px 0; border: 1px solid #e2e8f0;">
@@ -77,7 +77,7 @@ export const POST = async (request: Request) => {
               "${message}"
             </div>
             
-            <a href="https://satriabahari.my.id/chat" style="${buttonStyle}">Balas Sekarang</a>
+            <a href="https://krisnataufik.my.id/chat" style="${buttonStyle}">Balas Sekarang</a>
           </div>
           <div style="${footerStyle}">
             Automated Notification System • Portfolio App
@@ -87,7 +87,7 @@ export const POST = async (request: Request) => {
 
       await transporter.sendMail({
         from: `"Chat System" <${process.env.NODEMAILER_EMAIL}>`,
-        to: "satriaaxel7703@gmail.com",
+        to: "k1215na77@gmail.com",
         subject: `New Message from ${name} 💬`,
         html: htmlNewChat,
       });

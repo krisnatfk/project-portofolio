@@ -19,7 +19,7 @@ export async function generateMetadata({
   return {
     title: `${t("title")} ${METADATA.exTitle}`,
     description: t("description"),
-    keywords: "software engineer achievements, certificates, satria bahari",
+    keywords: "informatika achievements, certificates, krisna taufik",
     alternates: {
       canonical: `${process.env.DOMAIN}/${locale}/achievements`,
     },

@@ -14,7 +14,7 @@ const Story = () => {
         </div>
       ))}
       <Image
-        src="/images/signature.png"
+        src="/images/tanda_tangan.png"
         alt="signature"
         width={100}
         height={100}

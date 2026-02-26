@@ -42,7 +42,7 @@ export const POST = async (request: Request) => {
         </div>
 
         <footer style="margin-top: 30px; font-size: 12px; color: #aaa; text-align: center;">
-          Pesan ini dikirim via sistem otomatis Portfolio Satria.
+          Pesan ini dikirim via sistem otomatis Portfolio Krisna.
         </footer>
       </div>
     `;
@@ -50,7 +50,7 @@ export const POST = async (request: Request) => {
     await transporter.sendMail({
       from: `"${name}" <${process.env.NODEMAILER_EMAIL}>`,
       replyTo: email,
-      to: "satriaaxel7703@gmail.com",
+      to: "k1215na77@gmail.com",
       subject: `🚀 Contact Form: ${name}`,
       text: `${message} | Dikirim oleh: ${email}`,
       html: htmlTemplate,
