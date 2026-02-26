@@ -16,7 +16,8 @@
       "sub_title": "Explore everything I’ve crafted, contributed, and accomplished."
     },
     "error": "An error occurred on the server.",
-    "no_data": "No data available."
+    "no_data": "No data available.",
+    "download_cv": "Download CV"
   },
   "AboutPage": {
     "title": "About",

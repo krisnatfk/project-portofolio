@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { HiOutlineDownload as DownloadIcon } from "react-icons/hi";
 
 const Introduction = () => {
   const t = useTranslations("HomePage");
@@ -23,9 +25,26 @@ const Introduction = () => {
             </div>
           ))}
         </div>
+
+        {/* CV Download Button */}
+        <div className="flex flex-wrap gap-3 pt-2">
+          <Link
+            href="/cv/krisna-taufik-cv.pdf"
+            target="_blank"
+            download
+            className="group flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-neutral-900 transition-all duration-300 hover:scale-105 hover:bg-primary/80 active:scale-95"
+          >
+            <DownloadIcon
+              size={16}
+              className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0"
+            />
+            {t("download_cv")}
+          </Link>
+        </div>
       </div>
     </section>
   );
 };
 
 export default Introduction;
+

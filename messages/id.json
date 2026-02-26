@@ -16,7 +16,8 @@
       "sub_title": "Jelajahi semua yang telah saya buat, kontribusikan, dan capai."
     },
     "error": "Terjadi kesalahan pada server.",
-    "no_data": "Data tidak tersedia."
+    "no_data": "Data tidak tersedia.",
+    "download_cv": "Unduh CV"
   },
   "AboutPage": {
     "title": "Tentang",
