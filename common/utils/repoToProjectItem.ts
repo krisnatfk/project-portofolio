@@ -13,7 +13,7 @@ export const slugify = (name: string): string =>
 /** Map a GithubRepo to a ProjectItem for use throughout the portfolio. */
 export const repoToProjectItem = (repo: GithubRepo, index: number): ProjectItem => {
   const topics = repo.repositoryTopics.nodes.map((n) => n.topic.name);
-  const allLanguages = repo.languages.nodes.map((n) => n.name);
+  const allLanguages = (repo.languages?.nodes ?? []).map((n) => n.name);
   const stacks = buildStackList(allLanguages, topics);
 
   return {

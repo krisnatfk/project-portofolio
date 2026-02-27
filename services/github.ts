@@ -9,7 +9,7 @@ export type GithubRepo = {
   homepageUrl: string | null;
   openGraphImageUrl: string;
   primaryLanguage: { name: string } | null;
-  languages: { nodes: { name: string }[] };
+  languages?: { nodes: { name: string }[] };
   repositoryTopics: { nodes: { topic: { name: string } }[] };
 };
 
