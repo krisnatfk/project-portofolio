@@ -27,7 +27,7 @@ const Projects = () => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {[...Array(6)].map((_, i) => (
           <ProjectSkeleton key={i} />
         ))}
@@ -40,7 +40,7 @@ const Projects = () => {
   }
 
   return (
-    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <section className="grid grid-cols-1 gap-5 md:grid-cols-2">
       {projects.map((project, index) => (
         <motion.div
           key={project.slug}
