@@ -15,7 +15,10 @@ export const getAchievementsData = async ({
 }: GetAchievementsDataProps) => {
   const supabase = createClient();
 
-  let query = supabase.from("achievements").select();
+  let query = supabase
+    .from("achievements")
+    .select()
+    .order("issue_date", { ascending: false });
 
   if (category) query = query.eq("category", category);
   if (search) query = query.ilike("name", `%${search}%`);

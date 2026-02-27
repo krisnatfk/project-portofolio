@@ -18,9 +18,15 @@ const EducationCard = ({
   return (
     <SpotlightCard className="flex items-start gap-5 p-6">
       {logo ? (
-        <Image width={70} height={70} src={logo} alt={school} />
+        <Image
+          width={64}
+          height={64}
+          src={logo}
+          alt={school}
+          className="h-16 w-16 shrink-0 rounded-lg object-contain"
+        />
       ) : (
-        <CompanyIcon size={65} />
+        <CompanyIcon size={50} className="shrink-0 text-neutral-500" />
       )}
 
       <div className="space-y-1">

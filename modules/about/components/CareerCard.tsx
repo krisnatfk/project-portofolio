@@ -68,14 +68,14 @@ const CareerCard = ({
     <SpotlightCard className="flex items-start gap-5 p-6">
       {logo ? (
         <Image
-          width={60}
-          height={60}
+          width={64}
+          height={64}
           src={logo}
           alt={company}
-          className="shrink-0 rounded-lg border-[1.5px] border-neutral-300 bg-neutral-100 dark:border-neutral-700"
+          className="h-16 w-16 shrink-0 rounded-lg object-contain"
         />
       ) : (
-        <CompanyIcon size={60} className="shrink-0 text-neutral-500" />
+        <CompanyIcon size={50} className="shrink-0 text-neutral-500" />
       )}
 
       <div className="w-full space-y-1">

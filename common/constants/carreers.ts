@@ -30,7 +30,7 @@ export const CAREERS: CareerProps[] = [
   {
     position: "Lead Developer",
     company: "Proyek Digitalisasi UMKM",
-    logo: "/images/careers/umkm.webp",
+    logo: "/images/careers/umkm.png",
     location: "Lampung, Indonesia 🇮🇩",
     location_type: "Onsite",
     type: "Freelance",
