@@ -7,8 +7,8 @@ import ProjectDetail from "@/modules/projects/components/ProjectDetail";
 import { ProjectItem } from "@/common/types/projects";
 import { METADATA } from "@/common/constants/metadata";
 import { loadMdxFiles } from "@/common/libs/mdx";
-import { getGithubPinnedRepos } from "@/services/github";
-import { repoToProjectItem } from "@/common/utils/repoToProjectItem";
+import { getAllPublicRepos } from "@/services/github";
+import { repoToProjectItem, slugify } from "@/common/utils/repoToProjectItem";
 
 interface ProjectDetailPageProps {
   params: {
@@ -17,12 +17,33 @@ interface ProjectDetailPageProps {
   };
 }
 
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+const getCustomThumbnailUrl = (slug: string): string =>
+  `${SUPABASE_URL}/storage/v1/object/public/projects/${slug}.webp`;
+
+const checkImageExists = async (url: string): Promise<boolean> => {
+  try {
+    const res = await fetch(url, { method: "HEAD" });
+    return res.ok;
+  } catch {
+    return false;
+  }
+};
+
 const getProjectDetail = async (slug: string): Promise<ProjectItem> => {
-  const repos = await getGithubPinnedRepos();
+  const repos = await getAllPublicRepos();
   const projectItems = repos.map(repoToProjectItem);
   const project = projectItems.find((p) => p.slug === slug);
 
   if (!project) throw new Error(`Project "${slug}" not found`);
+
+  // Check for custom thumbnail
+  const customUrl = getCustomThumbnailUrl(slug);
+  const hasCustom = await checkImageExists(customUrl);
+  if (hasCustom) {
+    project.image = customUrl;
+  }
 
   const contents = loadMdxFiles();
   const content = contents.find((item) => item.slug === slug);
@@ -46,7 +67,6 @@ export const generateMetadata = async ({
       siteName: METADATA.openGraph.siteName,
       locale: locale === "id" ? "id_ID" : "en_US",
       type: "article",
-      authors: [METADATA.creator],
     },
     keywords: project.title,
     alternates: {
