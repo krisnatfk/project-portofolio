@@ -9,6 +9,7 @@ export type GithubRepo = {
   homepageUrl: string | null;
   openGraphImageUrl: string;
   primaryLanguage: { name: string } | null;
+  languages: { nodes: { name: string }[] };
   repositoryTopics: { nodes: { topic: { name: string } }[] };
 };
 
@@ -52,6 +53,11 @@ const GITHUB_PINNED_REPOS_QUERY = `query($username: String!) {
           primaryLanguage {
             name
           }
+          languages(first: 10) {
+            nodes {
+              name
+            }
+          }
           repositoryTopics(first: 10) {
             nodes {
               topic {
@@ -81,6 +87,11 @@ const GITHUB_RECENT_REPOS_QUERY = `query($username: String!) {
         openGraphImageUrl
         primaryLanguage {
           name
+        }
+        languages(first: 10) {
+          nodes {
+            name
+          }
         }
         repositoryTopics(first: 10) {
           nodes {

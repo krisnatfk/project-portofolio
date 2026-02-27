@@ -33,7 +33,8 @@ export const GET = async () => {
     const projects: ProjectItem[] = await Promise.all(
       repos.map(async (repo, index) => {
         const topics = repo.repositoryTopics.nodes.map((n) => n.topic.name);
-        const stacks = buildStackList(repo.primaryLanguage?.name ?? null, topics);
+        const allLanguages = repo.languages.nodes.map((n) => n.name);
+        const stacks = buildStackList(allLanguages, topics);
         const slug = slugify(repo.name);
 
         // Check if custom thumbnail exists in Supabase Storage

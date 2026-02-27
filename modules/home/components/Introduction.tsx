@@ -29,7 +29,7 @@ const Introduction = () => {
         {/* CV Download Button */}
         <div className="flex flex-wrap gap-3 pt-2">
           <Link
-            href="/cv/krisna-taufik-cv.pdf"
+            href="/api/cv"
             target="_blank"
             download
             className="group flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-neutral-900 transition-all duration-300 hover:scale-105 hover:bg-primary/80 active:scale-95"

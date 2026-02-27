@@ -73,16 +73,18 @@ export const mapTopicsToStacks = (topics: string[]): string[] => {
 };
 
 /**
- * Builds a deduplicated stack list from primary language + topics.
+ * Builds a deduplicated stack list from all detected languages + topics.
  */
 export const buildStackList = (
-  primaryLanguage: string | null,
+  allLanguages: string[],
   topics: string[],
 ): string[] => {
   const stacks = new Set<string>();
 
-  const lang = mapLanguageToStack(primaryLanguage);
-  if (lang) stacks.add(lang);
+  for (const lang of allLanguages) {
+    const mapped = mapLanguageToStack(lang);
+    if (mapped) stacks.add(mapped);
+  }
 
   for (const stack of mapTopicsToStacks(topics)) {
     stacks.add(stack);
