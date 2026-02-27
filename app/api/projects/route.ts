@@ -33,7 +33,9 @@ export const GET = async () => {
     const projects: ProjectItem[] = await Promise.all(
       repos.map(async (repo, index) => {
         const topics = repo.repositoryTopics.nodes.map((n) => n.topic.name);
-        const allLanguages = (repo.languages?.nodes ?? []).map((n) => n.name);
+        const allLanguages = repo.languages?.nodes?.length
+          ? repo.languages.nodes.map((n) => n.name)
+          : repo.primaryLanguage ? [repo.primaryLanguage.name] : [];
         const stacks = buildStackList(allLanguages, topics);
         const slug = slugify(repo.name);
 
