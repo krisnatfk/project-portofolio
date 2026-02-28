@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getAllPublicRepos, GithubRepo } from "@/services/github";
 import { buildStackList } from "@/common/utils/mapLanguageToStack";
 import { ProjectItem } from "@/common/types/projects";
+import { HIDDEN_PROJECTS } from "@/common/constants/hiddenProjects";
 
 export const dynamic = "force-dynamic";
 
@@ -30,8 +31,13 @@ export const GET = async () => {
   try {
     const repos = await getAllPublicRepos();
 
+    // Filter out hidden projects
+    const visibleRepos = repos.filter(
+      (repo) => !HIDDEN_PROJECTS.map(h => h.toLowerCase()).includes(slugify(repo.name)),
+    );
+
     const projects: ProjectItem[] = await Promise.all(
-      repos.map(async (repo, index) => {
+      visibleRepos.map(async (repo, index) => {
         const topics = repo.repositoryTopics.nodes.map((n) => n.topic.name);
         const allLanguages = repo.languages?.nodes?.length
           ? repo.languages.nodes.map((n) => n.name)
