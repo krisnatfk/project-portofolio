@@ -38,6 +38,8 @@ import {
   SiZod,
   SiShadcnui,
   SiAxios,
+  SiFlutter,
+  SiDart,
 } from "react-icons/si";
 import { RiShieldKeyholeFill } from "react-icons/ri";
 
@@ -221,10 +223,28 @@ export const STACKS: SkillProps = {
     color: "text-red-700",
     isActive: true,
   },
+  Filament: {
+    icon: <SiLaravel size={iconSize} />,
+    background: "bg-amber-500",
+    color: "text-amber-500",
+    isActive: true,
+  },
   Kotlin: {
     icon: <SiKotlin size={iconSize} />,
     background: "bg-violet-600",
     color: "text-violet-600",
+    isActive: true,
+  },
+  Flutter: {
+    icon: <SiFlutter size={iconSize} />,
+    background: "bg-sky-500",
+    color: "text-sky-500",
+    isActive: true,
+  },
+  Dart: {
+    icon: <SiDart size={iconSize} />,
+    background: "bg-blue-500",
+    color: "text-blue-500",
     isActive: true,
   },
   "Jetpack Compose": {

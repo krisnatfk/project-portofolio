@@ -3,6 +3,7 @@ import { getAllPublicRepos, GithubRepo } from "@/services/github";
 import { buildStackList } from "@/common/utils/mapLanguageToStack";
 import { ProjectItem } from "@/common/types/projects";
 import { HIDDEN_PROJECTS } from "@/common/constants/hiddenProjects";
+import { PROJECT_CUSTOM_STACKS } from "@/common/constants/projectStacks";
 
 export const dynamic = "force-dynamic";
 
@@ -42,8 +43,20 @@ export const GET = async () => {
         const allLanguages = repo.languages?.nodes?.length
           ? repo.languages.nodes.map((n) => n.name)
           : repo.primaryLanguage ? [repo.primaryLanguage.name] : [];
-        const stacks = buildStackList(allLanguages, topics);
+        const autoStacks = buildStackList(allLanguages, topics);
         const slug = slugify(repo.name);
+
+        // Apply custom stacks if defined
+        const customConfig = PROJECT_CUSTOM_STACKS[slug];
+        let stacks = autoStacks;
+        if (customConfig) {
+          if (customConfig.mode === "replace") {
+            stacks = customConfig.stacks;
+          } else {
+            // merge: combine auto-detected + custom, deduplicated
+            stacks = Array.from(new Set([...autoStacks, ...customConfig.stacks]));
+          }
+        }
 
         // Check if custom thumbnail exists in Supabase Storage
         const customUrl = getCustomThumbnailUrl(slug);
