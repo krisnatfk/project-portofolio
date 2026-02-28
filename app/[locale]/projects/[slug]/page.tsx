@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -9,8 +11,6 @@ import ProjectDetail from "@/modules/projects/components/ProjectDetail";
 import { ProjectItem } from "@/common/types/projects";
 import { METADATA } from "@/common/constants/metadata";
 import { loadMdxFiles } from "@/common/libs/mdx";
-import { getAllPublicRepos } from "@/services/github";
-import { repoToProjectItem, slugify } from "@/common/utils/repoToProjectItem";
 
 interface ProjectDetailPageProps {
   params: {
@@ -19,42 +19,44 @@ interface ProjectDetailPageProps {
   };
 }
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-
-const getCustomThumbnailUrl = (slug: string): string =>
-  `${SUPABASE_URL}/storage/v1/object/public/projects/${slug}.webp`;
-
-const checkImageExists = async (url: string): Promise<boolean> => {
-  try {
-    const res = await fetch(url, { method: "HEAD" });
-    return res.ok;
-  } catch {
-    return false;
-  }
-};
-
-import { notFound } from "next/navigation";
-
+/**
+ * Fetch project data from the internal /api/projects endpoint.
+ * This is critical: the API route is proven to work on Vercel,
+ * while direct getAllPublicRepos() calls from server components
+ * can return empty results due to unstable_cache behavior during build.
+ */
 const getProjectDetail = async (slug: string): Promise<ProjectItem | null> => {
-  const repos = await getAllPublicRepos();
-  const projectItems = repos.map(repoToProjectItem);
-  const project = projectItems.find((p) => p.slug === slug);
+  try {
+    // Build the absolute URL for internal API call
+    const headersList = headers();
+    const host = headersList.get("host") || "localhost:3000";
+    const protocol = headersList.get("x-forwarded-proto") || "http";
+    const baseUrl = `${protocol}://${host}`;
 
-  if (!project) return null;
+    const res = await fetch(`${baseUrl}/api/projects`, {
+      cache: "no-store",
+    });
 
-  // Check for custom thumbnail
-  const customUrl = getCustomThumbnailUrl(slug);
-  const hasCustom = await checkImageExists(customUrl);
-  if (hasCustom) {
-    project.image = customUrl;
+    if (!res.ok) {
+      console.error("Failed to fetch projects from API:", res.status);
+      return null;
+    }
+
+    const projects: ProjectItem[] = await res.json();
+    const project = projects.find((p) => p.slug === slug);
+
+    if (!project) return null;
+
+    // Load MDX content if available
+    const contents = loadMdxFiles();
+    const content = contents.find((item) => item.slug === slug);
+
+    return { ...project, content: content?.content ?? null };
+  } catch (error) {
+    console.error("Error fetching project detail:", error);
+    return null;
   }
-
-  const contents = loadMdxFiles();
-  const content = contents.find((item) => item.slug === slug);
-
-  return JSON.parse(JSON.stringify({ ...project, content: content?.content ?? null }));
 };
-
 
 export const generateMetadata = async ({
   params,
