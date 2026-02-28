@@ -31,12 +31,14 @@ const checkImageExists = async (url: string): Promise<boolean> => {
   }
 };
 
-const getProjectDetail = async (slug: string): Promise<ProjectItem> => {
+import { notFound } from "next/navigation";
+
+const getProjectDetail = async (slug: string): Promise<ProjectItem | null> => {
   const repos = await getAllPublicRepos();
   const projectItems = repos.map(repoToProjectItem);
   const project = projectItems.find((p) => p.slug === slug);
 
-  if (!project) throw new Error(`Project "${slug}" not found`);
+  if (!project) return null;
 
   // Check for custom thumbnail
   const customUrl = getCustomThumbnailUrl(slug);
@@ -58,6 +60,10 @@ export const generateMetadata = async ({
   const project = await getProjectDetail(params?.slug);
   const locale = params.locale || "en";
 
+  if (!project) {
+    return { title: "Project Not Found" };
+  }
+
   return {
     title: `${project.title} ${METADATA.exTitle}`,
     description: project.description,
@@ -78,10 +84,12 @@ export const generateMetadata = async ({
 const ProjectDetailPage = async ({ params }: ProjectDetailPageProps) => {
   const data = await getProjectDetail(params?.slug);
 
+  if (!data) return notFound();
+
   return (
     <Container data-aos="fade-up">
       <BackButton url="/projects" />
-      <PageHeading title={data?.title} description={data?.description} />
+      <PageHeading title={data.title} description={data.description} />
       <ProjectDetail {...data} />
     </Container>
   );
