@@ -36,4 +36,5 @@ export const HIDDEN_PROJECTS: string[] = [
     "ayamfillet",
     "booking-jasa",
     "bg-remove",
+    "ecommerce-catalog",
 ];

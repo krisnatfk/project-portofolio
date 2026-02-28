@@ -66,4 +66,12 @@ export const PROJECT_CUSTOM_STACKS: Record<
         mode: "replace",
         stacks: ["Laravel", "PHP", "MySql", "Bootstrap", "TailwindCSS", "Vite", "Axios"],
     },
+    "furni-app": {
+        mode: "replace",
+        stacks: ["Laravel", "PHP", "MySql", "Bootstrap", "Filament", "TailwindCSS", "Vite", "Axios"],
+    },
+    "sistem-absensi-sekolah": {
+        mode: "replace",
+        stacks: ["Laravel", "PHP", "MySql", "Filament", "TailwindCSS", "Vite", "Axios"],
+    },
 };

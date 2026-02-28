@@ -4,6 +4,7 @@ import { buildStackList } from "@/common/utils/mapLanguageToStack";
 import { ProjectItem } from "@/common/types/projects";
 import { HIDDEN_PROJECTS } from "@/common/constants/hiddenProjects";
 import { PROJECT_CUSTOM_STACKS } from "@/common/constants/projectStacks";
+import { MANUAL_PROJECTS } from "@/common/constants/manualProjects";
 
 export const dynamic = "force-dynamic";
 
@@ -28,16 +29,26 @@ const checkImageExists = async (url: string): Promise<boolean> => {
   }
 };
 
+const applyCustomStacks = (slug: string, autoStacks: string[]): string[] => {
+  const customConfig = PROJECT_CUSTOM_STACKS[slug];
+  if (!customConfig) return autoStacks;
+  if (customConfig.mode === "replace") return customConfig.stacks;
+  return Array.from(new Set([...autoStacks, ...customConfig.stacks]));
+};
+
 export const GET = async () => {
   try {
     const repos = await getAllPublicRepos();
 
+    const hiddenLower = HIDDEN_PROJECTS.map(h => h.toLowerCase());
+
     // Filter out hidden projects
     const visibleRepos = repos.filter(
-      (repo) => !HIDDEN_PROJECTS.map(h => h.toLowerCase()).includes(slugify(repo.name)),
+      (repo) => !hiddenLower.includes(slugify(repo.name)),
     );
 
-    const projects: ProjectItem[] = await Promise.all(
+    // GitHub-detected projects
+    const ghProjects: ProjectItem[] = await Promise.all(
       visibleRepos.map(async (repo, index) => {
         const topics = repo.repositoryTopics.nodes.map((n) => n.topic.name);
         const allLanguages = repo.languages?.nodes?.length
@@ -45,20 +56,8 @@ export const GET = async () => {
           : repo.primaryLanguage ? [repo.primaryLanguage.name] : [];
         const autoStacks = buildStackList(allLanguages, topics);
         const slug = slugify(repo.name);
+        const stacks = applyCustomStacks(slug, autoStacks);
 
-        // Apply custom stacks if defined
-        const customConfig = PROJECT_CUSTOM_STACKS[slug];
-        let stacks = autoStacks;
-        if (customConfig) {
-          if (customConfig.mode === "replace") {
-            stacks = customConfig.stacks;
-          } else {
-            // merge: combine auto-detected + custom, deduplicated
-            stacks = Array.from(new Set([...autoStacks, ...customConfig.stacks]));
-          }
-        }
-
-        // Check if custom thumbnail exists in Supabase Storage
         const customUrl = getCustomThumbnailUrl(slug);
         const hasCustom = await checkImageExists(customUrl);
 
@@ -78,7 +77,40 @@ export const GET = async () => {
       }),
     );
 
-    return NextResponse.json(projects, { status: 200 });
+    // Manual projects (repos not detected by GitHub GraphQL)
+    const existingSlugs = new Set(ghProjects.map(p => p.slug));
+    const manualFiltered = MANUAL_PROJECTS.filter(
+      (mp) => !hiddenLower.includes(slugify(mp.name)) && !existingSlugs.has(slugify(mp.name)),
+    );
+
+    const manualItems: ProjectItem[] = await Promise.all(
+      manualFiltered.map(async (mp, index) => {
+        const slug = slugify(mp.name);
+        const autoStacks = buildStackList(mp.languages, mp.topics);
+        const stacks = applyCustomStacks(slug, autoStacks);
+
+        const customUrl = getCustomThumbnailUrl(slug);
+        const hasCustom = await checkImageExists(customUrl);
+
+        return {
+          id: ghProjects.length + index + 1,
+          title: humanizeName(mp.name),
+          slug,
+          description: mp.description,
+          image: hasCustom ? customUrl : `https://opengraph.githubassets.com/1/${mp.url.replace("https://github.com/", "")}`,
+          link_github: mp.url,
+          link_demo: mp.homepageUrl || null,
+          stacks,
+          content: null,
+          is_show: true,
+          is_featured: false,
+        };
+      }),
+    );
+
+    const allProjects = [...ghProjects, ...manualItems];
+
+    return NextResponse.json(allProjects, { status: 200 });
   } catch (error: any) {
     console.error("Projects API Error:", error.message);
     return NextResponse.json(
