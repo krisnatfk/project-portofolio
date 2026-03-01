@@ -46,9 +46,9 @@ export const PROJECT_CUSTOM_STACKS: Record<
         mode: "replace",
         stacks: ["PHP", "Laravel", "Filament", "TailwindCSS", "MySql"],
     },
-    "web-ayam-fillet": {
+    "gocart": {
         mode: "replace",
-        stacks: ["Next.js", "React.js", "Express.js", "Node.js", "TailwindCSS", "TypeScript", "JavaScript"],
+        stacks: ["Next.js", "React.js", "Express.js", "Node.js", "TailwindCSS", "TypeScript"],
     },
     "quickshow": {
         mode: "replace",
