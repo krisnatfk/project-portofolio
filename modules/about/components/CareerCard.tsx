@@ -16,7 +16,11 @@ import { useLocale } from "next-intl";
 import { differenceInMonths, differenceInYears, format } from "date-fns";
 
 import SpotlightCard from "@/common/components/elements/SpotlightCard";
-import { CareerProps } from "@/common/types/careers";
+import { CareerProps, I18nText } from "@/common/types/careers";
+
+/** Helper: extract text based on current locale */
+const t = (text: I18nText, locale: string): string =>
+  locale === "id" ? text.id : text.en;
 
 const CareerCard = ({
   position,
@@ -58,6 +62,7 @@ const CareerCard = ({
   const hideText = locale === "en" ? "Hide" : "Sembunyikan";
   const showText = locale === "en" ? "Show" : "Tampilkan";
   const detailsText = locale === "en" ? "details" : "detail";
+  const presentText = locale === "en" ? "Present" : "Sekarang";
 
   const learnedLabel =
     locale === "en" ? "What I Learned" : "Apa yang saya pelajari";
@@ -71,7 +76,7 @@ const CareerCard = ({
           width={64}
           height={64}
           src={logo}
-          alt={company}
+          alt={t(company, locale)}
           className="h-16 w-16 shrink-0 rounded-lg object-contain"
         />
       ) : (
@@ -79,12 +84,12 @@ const CareerCard = ({
       )}
 
       <div className="w-full space-y-1">
-        <h5>{position}</h5>
+        <h5>{t(position, locale)}</h5>
         <div className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
           <div className="flex flex-col gap-2 md:flex-row">
             <Link href={link || "#"} target="_blank">
               <span className="cursor-pointer hover:text-neutral-900 hover:underline hover:dark:text-neutral-50">
-                {company}
+                {t(company, locale)}
               </span>
             </Link>
             <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
@@ -96,7 +101,7 @@ const CareerCard = ({
           <div className="flex flex-col gap-2 text-[13px] md:flex-row">
             <div className="flex gap-1 text-neutral-600 dark:text-neutral-400">
               <span>{format(startDate, "MMM yyyy")}</span> -{" "}
-              <span>{end_date ? format(endDate, "MMM yyyy") : "Present"}</span>
+              <span>{end_date ? format(endDate, "MMM yyyy") : presentText}</span>
             </div>
 
             <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
@@ -108,7 +113,7 @@ const CareerCard = ({
               •
             </span>
             <span className="text-neutral-600 dark:text-neutral-400">
-              {type}
+              {t(type, locale)}
             </span>
 
             <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
@@ -161,7 +166,7 @@ const CareerCard = ({
                               <span className="font-bold text-neutral-700 dark:text-neutral-300">
                                 ✓
                               </span>
-                              {item}
+                              {t(item, locale)}
                             </li>
                           ))}
                         </ul>
@@ -188,7 +193,7 @@ const CareerCard = ({
                                 <span className="font-bold text-neutral-700 dark:text-neutral-300">
                                   ✓
                                 </span>{" "}
-                                {item}
+                                {t(item, locale)}
                               </li>
                             ))}
                           </ul>
@@ -213,7 +218,7 @@ const CareerCard = ({
                                 <span className="font-bold text-neutral-700 dark:text-neutral-300">
                                   ✓
                                 </span>
-                                {item}
+                                {t(item, locale)}
                               </li>
                             ))}
                           </ul>

@@ -1,8 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import { BsBuildings as CompanyIcon } from "react-icons/bs";
+import { useLocale } from "next-intl";
 
-import { EducationProps } from "@/common/types/education";
+import { EducationProps, I18nText } from "@/common/types/education";
 import SpotlightCard from "@/common/components/elements/SpotlightCard";
+
+/** Helper: extract text based on current locale */
+const t = (text: I18nText, locale: string): string =>
+  locale === "id" ? text.id : text.en;
 
 const EducationCard = ({
   school,
@@ -15,6 +22,8 @@ const EducationCard = ({
   location,
   GPA,
 }: EducationProps) => {
+  const locale = useLocale();
+
   return (
     <SpotlightCard className="flex items-start gap-5 p-6">
       {logo ? (
@@ -35,11 +44,11 @@ const EducationCard = ({
         </a>
         <div className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
           <div className="flex flex-col gap-1 md:flex-row md:gap-2">
-            <span>{degree}</span>
+            <span>{t(degree, locale)}</span>
             <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
               •
             </span>
-            <span>{major}</span>
+            <span>{t(major, locale)}</span>
             {GPA && (
               <div className="flex gap-2">
                 <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
