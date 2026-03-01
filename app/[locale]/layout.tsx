@@ -26,6 +26,7 @@ export const metadata: Metadata = {
       ? "http://localhost:3000"
       : process.env.DOMAIN || "",
   ),
+  title: `Krisna Taufik — Portfolio`,
   description: METADATA.description,
   keywords: METADATA.keyword,
   creator: METADATA.creator,
@@ -34,11 +35,26 @@ export const metadata: Metadata = {
     url: METADATA.openGraph.url,
   },
   openGraph: {
-    images: METADATA.profile,
+    title: "Krisna Taufik — Portfolio",
+    description: METADATA.description,
+    images: [
+      {
+        url: METADATA.ogImage,
+        width: 1200,
+        height: 630,
+        alt: "Krisna Taufik — Informatics Student | Lead Developer | Tech Enthusiast",
+      },
+    ],
     url: METADATA.openGraph.url,
     siteName: METADATA.openGraph.siteName,
     locale: METADATA.openGraph.locale,
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Krisna Taufik — Portfolio",
+    description: METADATA.description,
+    images: [METADATA.ogImage],
   },
 };
 

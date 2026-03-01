@@ -13,4 +13,5 @@ export const METADATA = {
   },
   exTitle: "| Krisna Taufik",
   profile: "/images/krisna.png",
+  ogImage: "/images/og-image.png",
 };
