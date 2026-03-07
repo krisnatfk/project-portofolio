@@ -5,6 +5,7 @@ import { ProjectItem } from "@/common/types/projects";
 import { HIDDEN_PROJECTS } from "@/common/constants/hiddenProjects";
 import { PROJECT_CUSTOM_STACKS } from "@/common/constants/projectStacks";
 import { MANUAL_PROJECTS } from "@/common/constants/manualProjects";
+import { PROJECT_CUSTOM_URLS } from "@/common/constants/projectUrls";
 
 export const dynamic = "force-dynamic";
 
@@ -68,7 +69,7 @@ export const GET = async () => {
           description: repo.description ?? "A project by Krisna Taufik.",
           image: hasCustom ? customUrl : repo.openGraphImageUrl,
           link_github: repo.url,
-          link_demo: repo.homepageUrl || null,
+          link_demo: PROJECT_CUSTOM_URLS[slug] || repo.homepageUrl || null,
           stacks,
           content: null,
           is_show: true,
@@ -99,7 +100,7 @@ export const GET = async () => {
           description: mp.description,
           image: hasCustom ? customUrl : `https://opengraph.githubassets.com/1/${mp.url.replace("https://github.com/", "")}`,
           link_github: mp.url,
-          link_demo: mp.homepageUrl || null,
+          link_demo: PROJECT_CUSTOM_URLS[slug] || mp.homepageUrl || null,
           stacks,
           content: null,
           is_show: true,
