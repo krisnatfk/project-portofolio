@@ -46,7 +46,11 @@ export const PROJECT_CUSTOM_STACKS: Record<
         mode: "replace",
         stacks: ["PHP", "Laravel", "Filament", "TailwindCSS", "MySql"],
     },
-    "web-ayam-fillet": {
+    // "web-ayam-fillet": {
+    //     mode: "replace",
+    //     stacks: ["Next.js", "React.js", "Express.js", "Node.js", "TailwindCSS", "TypeScript"],
+    // },
+    "e-commerce": {
         mode: "replace",
         stacks: ["Next.js", "React.js", "Express.js", "Node.js", "TailwindCSS", "TypeScript"],
     },
