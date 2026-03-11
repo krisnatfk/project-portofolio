@@ -1,4 +1,5 @@
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 import ReactMarkdown from "react-markdown";
 import { ReactNode } from "react";
 
@@ -6,6 +7,7 @@ import CodeBlock from "./CodeBlock";
 
 interface MarkdownRendererProps {
   children: string;
+  repoSlug?: string;
 }
 
 interface TableProps {
@@ -20,10 +22,11 @@ const Table = (props: TableProps & React.HTMLProps<HTMLTableElement>) => (
   </div>
 );
 
-const MDXComponent = ({ children }: MarkdownRendererProps) => {
+const MDXComponent = ({ children, repoSlug }: MarkdownRendererProps) => {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeRaw]}
       components={{
         a: (props) => (
           <a
@@ -75,6 +78,20 @@ const MDXComponent = ({ children }: MarkdownRendererProps) => {
             {children}
           </td>
         ),
+        img: (props) => {
+          let src = props.src;
+          if (src && !src.startsWith("http") && repoSlug) {
+            src = `https://raw.githubusercontent.com/krisnatfk/${repoSlug}/main/${src}`;
+          }
+          return (
+            <img
+              src={src}
+              alt={props.alt || "image"}
+              className="rounded-lg object-contain w-full my-4"
+              loading="lazy"
+            />
+          );
+        },
       }}
     >
       {children}

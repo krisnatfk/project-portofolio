@@ -221,3 +221,36 @@ export const getGithubData = async () => {
 
   return { status: 200, data };
 };
+
+const fetchRepoReadme = async (username: string, repo: string, token: string): Promise<string | null> => {
+  try {
+    const response = await axios.get(
+      `https://api.github.com/repos/${username}/${repo}/readme`,
+      {
+        headers: {
+          Authorization: `bearer ${token}`,
+          Accept: "application/vnd.github.raw+json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.status === 404) {
+      return null;
+    }
+    console.error(`GitHub README API Error for ${repo}:`, error.message);
+    return null;
+  }
+};
+
+const getCachedRepoReadme = unstable_cache(
+  async (username: string, repo: string, token: string) => fetchRepoReadme(username, repo, token),
+  ["github-readme-v1"],
+  { revalidate: 3600, tags: ["github-readme-tag"] },
+);
+
+export const getRepoReadme = async (repo: string): Promise<string | null> => {
+  const { username, token } = GITHUB_ACCOUNTS;
+  if (!username || !token) return null;
+  return getCachedRepoReadme(username, repo, token);
+};

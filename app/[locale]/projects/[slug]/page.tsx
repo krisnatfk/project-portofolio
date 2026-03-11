@@ -47,12 +47,31 @@ const getProjectDetail = async (slug: string): Promise<ProjectItem | null> => {
 
     if (!project) return null;
 
-    // Load MDX content if available
+    // Load MDX content if available (local has priority)
     const contents = loadMdxFiles();
-    const content = contents.find((item) => item.slug === slug);
+    const localContent = contents.find((item) => item.slug === slug);
+    let finalContent = localContent?.content ?? null;
 
-    return { ...project, content: content?.content ?? null };
+    // If no local content, try to fetch GitHub README
+    if (!finalContent) {
+      try {
+        const readmeRes = await fetch(`${baseUrl}/api/projects/${slug}/readme`, {
+          cache: "no-store",
+        });
+        if (readmeRes.ok) {
+          const readmeData = await readmeRes.json();
+          if (readmeData?.content) {
+            finalContent = readmeData.content;
+          }
+        }
+      } catch (e) {
+        console.error("Error fetching README:", e);
+      }
+    }
+
+    return { ...project, content: finalContent };
   } catch (error) {
+
     console.error("Error fetching project detail:", error);
     return null;
   }

@@ -10,6 +10,7 @@ import ProjectLink from "./ProjectLink";
 
 const ProjectDetail = ({
   title,
+  slug,
   image,
   stacks,
   link_demo,
@@ -59,7 +60,7 @@ const ProjectDetail = ({
 
       {content ? (
         <div className="mt-5 space-y-6 leading-[1.8] dark:text-neutral-300">
-          <MDXComponent>{content}</MDXComponent>
+          <MDXComponent repoSlug={slug}>{content}</MDXComponent>
         </div>
       ) : null}
     </div>
