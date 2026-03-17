@@ -78,4 +78,8 @@ export const PROJECT_CUSTOM_STACKS: Record<
         mode: "replace",
         stacks: ["Laravel", "PHP", "MySql", "Filament", "TailwindCSS", "Vite", "Axios"],
     },
+    "diabetes-app": {
+        mode: "replace",
+        stacks: ["Next.js", "React", "TypeScript", "TailwindCSS", "PostCSS", "Axios", "Framer Motion", "Recharts", "Lucide React", "ESLint", "FastAPI", "Python", "Scikit-learn", "Pandas", "NumPy", "Joblib", "Pydantic", "Supabase", "Vercel"],
+    },
 };

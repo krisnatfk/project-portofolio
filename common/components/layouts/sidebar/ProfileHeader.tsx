@@ -22,7 +22,7 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
       )}
     >
       <Image
-        src={"/images/krisna.png"}
+        src={"/images/Foto-Profil.JPEG"}
         width={expandMenu ? 80 : imageSize * 1}
         height={expandMenu ? 80 : imageSize * 1}
         alt="Krisna Taufik"
