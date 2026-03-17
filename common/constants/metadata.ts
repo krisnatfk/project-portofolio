@@ -12,6 +12,6 @@ export const METADATA = {
     locale: "id-ID",
   },
   exTitle: "| Krisna Taufik",
-  profile: "/images/Foto-Profil.JPEG",
+  profile: "/images/foto-profil.png",
   ogImage: "/images/og-image.png",
 };
