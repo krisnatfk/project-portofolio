@@ -161,7 +161,7 @@ export const STACKS: SkillProps = {
     icon: <SiZod size={iconSize} />,
     background: "bg-blue-600",
     color: "text-blue-600",
-    isActive: true,
+    isActive: false,
   },
   "Framer Motion": {
     icon: <TbBrandFramerMotion size={iconSize} />,
@@ -173,7 +173,7 @@ export const STACKS: SkillProps = {
     icon: <SiRedux size={iconSize} />,
     background: "bg-violet-500",
     color: "text-violet-500",
-    isActive: true,
+    isActive: false,
   },
   Prisma: {
     icon: <SiPrisma size={iconSize} />,
@@ -209,7 +209,7 @@ export const STACKS: SkillProps = {
     icon: <FaGolang size={iconSize} />,
     background: "bg-sky-500",
     color: "text-sky-500",
-    isActive: true,
+    isActive: false,
   },
   PHP: {
     icon: <SiPhp size={iconSize} />,
@@ -233,7 +233,7 @@ export const STACKS: SkillProps = {
     icon: <SiKotlin size={iconSize} />,
     background: "bg-violet-600",
     color: "text-violet-600",
-    isActive: true,
+    isActive: false,
   },
   Flutter: {
     icon: <SiFlutter size={iconSize} />,
