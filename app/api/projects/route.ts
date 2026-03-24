@@ -9,6 +9,8 @@ import { PROJECT_CUSTOM_URLS } from "@/common/constants/projectUrls";
 
 export const dynamic = "force-dynamic";
 
+const FEATURED_PROJECTS = ["project-portofolio"];
+
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const BUCKET_NAME = "projects";
 
@@ -109,7 +111,14 @@ export const GET = async () => {
       }),
     );
 
-    const allProjects = [...ghProjects, ...manualItems];
+    const allProjects = [...ghProjects, ...manualItems].map((p) => ({
+      ...p,
+      is_featured: FEATURED_PROJECTS.includes(p.slug),
+    })).sort((a, b) => {
+      if (a.is_featured && !b.is_featured) return -1;
+      if (!a.is_featured && b.is_featured) return 1;
+      return 0;
+    });
 
     return NextResponse.json(allProjects, { status: 200 });
   } catch (error: any) {

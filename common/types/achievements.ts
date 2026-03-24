@@ -11,4 +11,5 @@ export interface AchievementItem {
   expiration_date?: string;
   image: string;
   is_show?: boolean;
+  is_featured?: boolean;
 }

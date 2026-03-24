@@ -8,6 +8,7 @@ import { IoClose as CloseIcon } from "react-icons/io5";
 import { HiOutlineLocationMarker as LocationIcon } from "react-icons/hi";
 import { BsCalendar3 as CalendarIcon } from "react-icons/bs";
 import { MdOutlineCategory as CategoryIcon } from "react-icons/md";
+import { TbPinnedFilled as PinIcon } from "react-icons/tb";
 
 import Image from "@/common/components/elements/Image";
 import SpotlightCard from "@/common/components/elements/SpotlightCard";
@@ -22,6 +23,7 @@ export interface ActivityItem {
     category: string;
     location: string;
     is_show: boolean;
+    is_featured?: boolean;
 }
 
 const ActivityCard = ({
@@ -31,6 +33,7 @@ const ActivityCard = ({
     image,
     category,
     location,
+    is_featured,
 }: ActivityItem) => {
     const [isOpen, setIsOpen] = useState(false);
     const t = useTranslations("ActivitiesPage");
@@ -55,7 +58,14 @@ const ActivityCard = ({
                 onClick={() => setIsOpen(true)}
                 className="h-full cursor-pointer"
             >
-                <SpotlightCard className="group flex h-full flex-col overflow-hidden border border-neutral-200 dark:border-neutral-800">
+                <SpotlightCard className="group relative flex h-full flex-col overflow-hidden border border-neutral-200 dark:border-neutral-800">
+                    {/* Featured Badge */}
+                    {is_featured && (
+                        <div className="absolute right-0 top-0 z-10 flex items-center gap-x-1 rounded-bl-lg rounded-tr-lg bg-primary px-2 py-1 text-xs font-semibold text-neutral-900">
+                            <PinIcon size={12} />
+                            <span>Featured</span>
+                        </div>
+                    )}
                     {/* Image */}
                     <div className="relative overflow-hidden">
                         <motion.div layoutId={`activity-image-${title}-${date}`}>

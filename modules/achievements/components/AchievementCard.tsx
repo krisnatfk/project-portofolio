@@ -6,6 +6,7 @@ import { format, parseISO } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiOutlineArrowSmRight as ViewIcon } from "react-icons/hi";
 import { IoClose as CloseIcon } from "react-icons/io5";
+import { TbPinnedFilled as PinIcon } from "react-icons/tb";
 import { AchievementItem } from "@/common/types/achievements";
 
 import Image from "@/common/components/elements/Image";
@@ -22,6 +23,7 @@ const AchievementCard = ({
   category,
   credential_id,
   url_credential,
+  is_featured,
 }: AchievementItem) => {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("AchievementsPage");
@@ -46,7 +48,14 @@ const AchievementCard = ({
         onClick={() => setIsOpen(true)}
         className="h-full cursor-pointer"
       >
-        <SpotlightCard className="group flex h-full flex-col overflow-hidden border border-neutral-200 dark:border-neutral-800">
+        <SpotlightCard className="group relative flex h-full flex-col overflow-hidden border border-neutral-200 dark:border-neutral-800">
+          {/* Featured Badge */}
+          {is_featured && (
+            <div className="absolute right-0 top-0 z-10 flex items-center gap-x-1 rounded-bl-lg rounded-tr-lg bg-primary px-2 py-1 text-xs font-semibold text-neutral-900">
+              <PinIcon size={12} />
+              <span>Featured</span>
+            </div>
+          )}
           <div className="relative overflow-hidden">
             <motion.div layoutId={`image-${image}`}>
               <Image

@@ -12,6 +12,11 @@ import AchievementCard from "./AchievementCard";
 import AchievementSkeleton from "./AchievementSkeleton";
 import FilterHeader from "./FilterHeader";
 
+const FEATURED_ACHIEVEMENTS = [
+  "Sertifikasi Nasional Ilmuwan Data Madya (Associate Data Scientist)",
+  "Sertifikasi Nasional Pengembang Web Pratama (Junior Web Developer)",
+];
+
 const Achievements = () => {
   const t = useTranslations("AchievementsPage");
 
@@ -45,6 +50,17 @@ const Achievements = () => {
       const matchesType = !type || item?.type === type;
 
       return matchesShow && matchesType && matchesCategory;
+    })
+    ?.map((item: AchievementItem) => ({
+      ...item,
+      is_featured: FEATURED_ACHIEVEMENTS.some(
+        (name) => item.name?.toLowerCase() === name.toLowerCase(),
+      ),
+    }))
+    ?.sort((a: AchievementItem, b: AchievementItem) => {
+      if (a.is_featured && !b.is_featured) return -1;
+      if (!a.is_featured && b.is_featured) return 1;
+      return 0;
     });
 
   return (

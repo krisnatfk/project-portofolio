@@ -9,6 +9,10 @@ import EmptyState from "@/common/components/elements/EmptyState";
 import ActivityCard, { ActivityItem } from "./ActivityCard";
 import ActivitySkeleton from "./ActivitySkeleton";
 
+const FEATURED_ACTIVITIES = [
+    "Mahasiswa Berprestasi Universitas Teknokrat Indonesia 2025",
+];
+
 const Activities = () => {
     const t = useTranslations("ActivitiesPage");
 
@@ -17,7 +21,18 @@ const Activities = () => {
         fetcher,
     );
 
-    const activities = data ?? [];
+    const activities = (data ?? [])
+        .map((item: ActivityItem) => ({
+            ...item,
+            is_featured: FEATURED_ACTIVITIES.some(
+                (name) => item.title?.toLowerCase() === name.toLowerCase(),
+            ),
+        }))
+        .sort((a: ActivityItem, b: ActivityItem) => {
+            if (a.is_featured && !b.is_featured) return -1;
+            if (!a.is_featured && b.is_featured) return 1;
+            return 0;
+        });
 
     if (isLoading) {
         return (
