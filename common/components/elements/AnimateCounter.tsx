@@ -12,13 +12,18 @@ const AnimateCounter = ({ total, ...rest }: AnimateCounterProps) => {
   useEffect(() => {
     const count = countRef.current;
 
-    const formatter = new Intl.NumberFormat("id-ID");
+    const hasDecimals = total % 1 !== 0;
+    const decimals = hasDecimals ? 1 : 0;
+    const formatter = new Intl.NumberFormat("id-ID", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
 
     const controls: AnimationPlaybackControls = animate(initialCount, total, {
       duration: 1,
       onUpdate: (value) => {
         if (count) {
-          count.textContent = formatter.format(Math.floor(value));
+          count.textContent = formatter.format(Number(value.toFixed(decimals)));
         }
       },
     });

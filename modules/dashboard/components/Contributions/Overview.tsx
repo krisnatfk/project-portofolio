@@ -33,9 +33,8 @@ const Overview = ({ data }: OverviewProps) => {
     .flat();
 
   const bestContribution = Math.max(...totalContributionList) || 0;
-  const averageContribution = Math.round(
-    totalContributions / totalContributionList.length,
-  );
+  const rawAverage = totalContributions / (totalContributionList.length || 1);
+  const averageContribution = Number(rawAverage.toFixed(1));
 
   const t = useTranslations("DashboardPage.github");
 
